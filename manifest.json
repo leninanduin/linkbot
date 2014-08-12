@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+
+    "name": "Tweetbotium",
+    "description": "Replace twitter links for tweetbot calls.",
+    "version": "1.0",
+
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["jquery-1.11.1.min.js","urlreplace.js"],
+            "css": ["tweetbotium.css"]
+        }
+    ],
+    "web_accessible_resources":[
+        "tweetbotium.css"
+    ],
+    "permissions": [
+        "tabs"
+    ]
+}
