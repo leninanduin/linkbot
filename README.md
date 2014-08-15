@@ -1,15 +1,25 @@
-##What it does?
+## What it does?
 
-replaces http://twitter.com/ACTION for tweetbot:///ACTION urls, ONLY FOR MAC
+replaces http://twitter.com/ACTION for tweetbot:///ACTION urls, ONLY FOR MAC.
 
-##Works on:
+## Works on:
 
-- @username links
-- twitter sharing widget
+- @username links & widget
+- Tweet widget (with current paget title & url)
+- Tweet to @USERNAME widget
+- Tweet #HASHTAG widget
+- Url to #HASHTAG
+- YouTube sharing
+- Redability sharing
+- Pocket sharing
 
-## working on:
 
-- follow buttons
+## Needs fix
+
+- follow buttons (actually just links to the user profile)
+
+## Pending on:
+
 - fav buttons
 - retweet buttons
-- Dinamically generated widgets (loaded after a callback)
+- Dinamically generated widgets (loaded after a  callback -page scroll or something-)

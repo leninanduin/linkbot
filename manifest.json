@@ -17,5 +17,9 @@
     ],
     "permissions": [
         "tabs"
-    ]
+    ],
+    "icons":{
+        "36": "icon-32.png",
+        "48": "icon-48.png"
+    }
 }
