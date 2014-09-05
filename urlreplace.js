@@ -185,14 +185,10 @@ function parseUrl(el){
     return false;
 }
 
-var tmp_iframe;
 function parseIframe(el, type){
     var _href, _title, _html;
 
-
     $(el).ready(function(){
-
-        tmp_iframe = el;
 
         setTimeout(function(){
             _log('twitter iframe loaded... '+type);
@@ -204,8 +200,6 @@ function parseIframe(el, type){
         }, 1000);
 
     });
-
-    return false;
 
     switch (type){
         case '/tweet_button.html':
@@ -248,7 +242,19 @@ function parseIframe(el, type){
     renderCustomButton(el, { href:_href, title:_title, html: _html, class: 'tweetbotium-button'});
     return false;
 }
+function resizeCustomButtonParent(el){
+    _w = $(el).width();
+    $(el).parent().attr('style', function(i,s) {
+        _style = '';
+        if (s){
+            _style += s;
+        }
+        _style += 'width: '+_w+'px !important;' ;
+        return _style;
+    });
 
+    return false;
+}
 function renderCustomButton(el, data){
 
     if ( $(el).hasClass('tweetbotium') ){
@@ -266,6 +272,7 @@ function renderCustomButton(el, data){
 
     if ( location.protocol == 'https:' ){
         $(button).insertBefore(el);
+        resizeCustomButtonParent(button);
     }else{
         var new_widget = $('<iframe/>',{class:widget_class}).insertBefore(el);
 
@@ -280,6 +287,7 @@ function renderCustomButton(el, data){
 
             $(new_widget).height( h );
             $(new_widget).width( w );
+            resizeCustomButtonParent(new_widget);
         }, 500);
     }
 
@@ -520,8 +528,13 @@ $(function(){
     });
 });
 
-
-function _log(s){console.log(s);return false;}
+debug = 0;
+function _log(s){
+    if (debug){
+        console.log(s);
+    }
+    return false;
+}
 
 function getUrlVars(h) {
     var vars = {};
