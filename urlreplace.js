@@ -8,7 +8,9 @@ var retweet_fav_url_r = /(http:|https:)?(\/\/)?(www\.)?twitter\.com\/(?:\/\#!)?(
 var share_url_r = /(http:|https:)?(\/\/)?(www\.)?twitter\.com\/(intent)?(share\?|share\/|\/tweet|status\/)/g;
 var follow_url_r = /(http:\/\/)?(https:\/\/)?(www\.)?twitter\.com(?:\/\#!)?\/(intent\/follow)/ig;
 
-var services_tw_r  = /(http:|https:)?(\/\/)?(www\.)?(about|api|tweetdeck|support|ads|dev|blog|mobile|oauth|status).twitter\.com\//g;
+var services_tw_r  = /(http:|https:)?(\/\/)?(www\.)?(about|api|tweetdeck|support|ads|dev|blog|mobile|oauth|status|platform).twitter\.com\//g;
+var tw_url_selector = '[href*="'+tw_url+'"],[data-href*="'+tw_url+'"],[data-url*="'+tw_url+'"]';
+
 
 var tweetbot_url = 'tweetbot://';
 var username_url = tweetbot_url+'/user_profile/';
@@ -18,7 +20,7 @@ var search_url = tweetbot_url+'/search/';
 
 
 var twitter_wigets = 'iframe[class*="twitter-"], iframe[src*="twitter.com"]';
-var twitter_button_class_r = /(twitter-)+\w+(-button)/;
+var twitter_button_class_r = /(twitter-)+\w+(-button)?/g;
 
 var p_username;
 
@@ -54,6 +56,7 @@ function getShareTxt(_url_vars, is_official_widget){
                 share_txt += _url_vars.text;
             }
         }
+        share_txt = share_txt.replace(/(\r\n|\n|\r)/gm,"")
     }
 
     if (_url_vars.status){
@@ -96,6 +99,7 @@ function setupUrlAction(el, url){
         .attr('o_href', $(el).attr('href') )
         .attr('href', url)
         .removeAttr('target')
+        .removeAttr('onclick')
         .unbind()
         .off()
         .undelegate()
@@ -111,6 +115,14 @@ function setupUrlAction(el, url){
 
 function parseUrl(el){
     h = $(el).attr('href');
+    if ( !h ){
+        h = $(el).attr('data-href');
+    }if ( !h ){
+        h = $(el).attr('data-url');
+    }if( !h ){
+        return false;
+    }
+
     //exclude SUBDOMAINS.twitter links
     if (h.match(services_tw_r)) {
         return false;
@@ -173,8 +185,28 @@ function parseUrl(el){
     return false;
 }
 
+var tmp_iframe;
 function parseIframe(el, type){
     var _href, _title, _html;
+
+
+    $(el).ready(function(){
+
+        tmp_iframe = el;
+
+        setTimeout(function(){
+            _log('twitter iframe loaded... '+type);
+
+            $(el).contents().find(tw_url_selector)
+            .each(function(_i, c_el) {
+                parseUrl(c_el);
+            });
+        }, 1000);
+
+    });
+
+    return false;
+
     switch (type){
         case '/tweet_button.html':
         case 'twitter-share-button':
@@ -218,6 +250,11 @@ function parseIframe(el, type){
 }
 
 function renderCustomButton(el, data){
+
+    if ( $(el).hasClass('tweetbotium') ){
+        return false;
+    }
+
     var widget_class = 'tweetbotium-widget';
     //create the new button
     var button = $('<a/>', {
@@ -276,6 +313,7 @@ function doTheMagic(){
         if ( _type ){
             parseIframe(el, _type[0]);
         }
+
     });
     $("#tweet_btn").each(function(index, el) {
         parseIframe(el, "twitter-share-button");
@@ -396,7 +434,7 @@ function doTheMagic(){
     });
 
     //urls
-    $('[href*="'+tw_url+'"]').each(function(index, el) {
+    $(tw_url_selector).each(function(index, el) {
         parseUrl(el);
     });
 
@@ -455,7 +493,7 @@ $(document).on('mouseenter', '[onclick*="twitter"]',function(){
 });
 
 //dynamic created urls
-$(document).on('mouseenter', '[href*="'+tw_url+'"]', function(){
+$(document).on('mouseenter', tw_url_selector, function(){
     _log( $(this).attr('href') );
     parseUrl(this);
 });
@@ -468,8 +506,10 @@ $(function(){
         //dinamically generated iframe widgets
         switch( node.tagName){
             case 'IFRAME':
+
                 if($(node).attr('class')){
                     var _type = $(node).attr('class').match(twitter_button_class_r);
+
                     if ( _type ){
                         parseIframe($(node), _type[0]);
                     }

@@ -9,6 +9,7 @@
         {
             "matches": ["http://*/*", "https://*/*"],
             "js": ["jquery-1.11.1.min.js","urlreplace.js"],
+            "all_frames":true,
             "css": ["tweetbotium.css"]
         }
     ],
@@ -16,7 +17,10 @@
         "tweetbotium.css"
     ],
     "permissions": [
-        "tabs"
+        "tabs",
+        "https://*.twitter.com/",
+        "http://*.twitter.com/",
+        "https://twitter.com/"
     ],
     "icons":{
         "36": "icon-32.png",

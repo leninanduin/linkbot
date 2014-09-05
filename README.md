@@ -6,6 +6,7 @@ replaces http://twitter.com/ACTION for tweetbot:///ACTION urls, ONLY FOR MAC.
 
 - @username links & widget
 - Tweet official widget (with current paget title & url)
+- Embeded twitts
 - Tweet to @USERNAME official widget
 - Tweet #HASHTAG official widget
 - replay to tweet links
