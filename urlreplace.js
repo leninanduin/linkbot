@@ -64,12 +64,21 @@ function getShareTxt(_url_vars, is_official_widget){
     }
 
     if (_url_vars.url) {
+<<<<<<< HEAD
         if ( url_vars.url.match(/\%/g) ){
         // if (!is_official_widget){
             share_txt += '+'+unescape(_url_vars.url);
         }else{
             share_txt += '+'+_url_vars.url;
         }
+=======
+        // if (!is_official_widget){
+        //     share_txt += '+'+escape(_url_vars.url);
+        // }else{
+        //     share_txt += '+'+_url_vars.url;
+        // }
+        share_txt += '+'+ p_url;
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
     }
 
     if (_url_vars.button_hashtag) {
@@ -91,7 +100,11 @@ function getShareTxt(_url_vars, is_official_widget){
 }
 
 function setupUrlAction(el, url){
+<<<<<<< HEAD
     if ( !$(el).hasClass('linkbot') ){
+=======
+    if ( !$(el).hasClass('tweetbotium') ){
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
         var n_el = el.cloneNode(true);
         el.parentNode.replaceChild(n_el, el);
 
@@ -103,13 +116,21 @@ function setupUrlAction(el, url){
         .unbind()
         .off()
         .undelegate()
+<<<<<<< HEAD
         .addClass('linkbot')
+=======
+        .addClass('tweetbotium')
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
         .click(function(e){
             e.preventDefault();
             location.href = url;
             return false;
         });
+<<<<<<< HEAD
         // .contents('i, .icon').addClass('linkbot-icon');
+=======
+        // .contents('i, .icon').addClass('tweetbotium-icon');
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
     }
 }
 
@@ -239,6 +260,7 @@ function parseIframe(el, type){
             return false;
     }
 
+<<<<<<< HEAD
     renderCustomButton(el, { href:_href, title:_title, html: _html, class: 'linkbot-button'});
     return false;
 }
@@ -266,11 +288,40 @@ function renderCustomButton(el, data){
     }
 
     var widget_class = 'linkbot-widget';
+=======
+    renderCustomButton(el, { href:_href, title:_title, html: _html, class: 'tweetbotium-button'});
+    return false;
+}
+function resizeCustomButtonParent(el){
+    _w = $(el).width();
+    $(el).parent().attr('style', function(i,s) {
+        _style = '';
+        if (s){
+            _style += s;
+        }
+        _style += 'width: '+_w+'px !important;' ;
+        return _style;
+    });
+
+    return false;
+}
+function renderCustomButton(el, data){
+
+    if ( $(el).hasClass('tweetbotium') ){
+        return false;
+    }
+
+    var widget_class = 'tweetbotium-widget';
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
     //create the new button
     var button = $('<a/>', {
         href:  data.href,
         title: data.title,
+<<<<<<< HEAD
         html: '<i class="linkbot-icon"></i>'+data.html,
+=======
+        html: '<i class="tweetbotium-icon"></i>'+data.html,
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
         class: data.class,
     });
 
@@ -281,7 +332,11 @@ function renderCustomButton(el, data){
         var new_widget = $('<iframe/>',{class:widget_class}).insertBefore(el);
 
         $(new_widget).contents().find('body').append(button)
+<<<<<<< HEAD
         .append('<link rel="stylesheet" href="'+chrome.extension.getURL('linkbot.css')+'">');
+=======
+        .append('<link rel="stylesheet" href="'+chrome.extension.getURL('tweetbotium.css')+'">');
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
 
         setTimeout(function(){
             var a = $(new_widget).contents().find("a");
@@ -310,7 +365,11 @@ function parseYtButton(el){
     url = post_tweet_url + getShareTxt( url_vars, 0 );
     _title = $(el).attr('title');
 
+<<<<<<< HEAD
     renderCustomButton(el, { href:url, title:_title, html: '', class: 'linkbot-squared-button'});
+=======
+    renderCustomButton(el, { href:url, title:_title, html: '', class: 'tweetbotium-squared-button'});
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
 }
 
 function doTheMagic(){
@@ -340,24 +399,39 @@ function doTheMagic(){
             href: post_tweet_url + getShareTxt({url: p_url, text: p_title,via: $('div.pw').eq(0).attr('pw:twitter-via') }, 0),
             title: p_title,
             html: "<span>Tweet</span>",
+<<<<<<< HEAD
             class: 'linkbot-button'}
+=======
+            class: 'tweetbotium-button'}
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
         );
     });
 
     //sharethis widget
     $('[class*="st_twitter"]').each(function(index, el) {
         var _type = $(el).attr('class').match(/st_twitter_\w+/g);
+<<<<<<< HEAD
         var btn_class = 'linkbot-button';
+=======
+        var btn_class = 'tweetbotium-button';
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
         var _html = '';
 
         if ( _type ){
             switch( _type[0] ){
                 case 'st_twitter_large':
                 case 'st_twitter_stbar':
+<<<<<<< HEAD
                     btn_class = 'linkbot-squared-button';
                 break;
                 default:
                     btn_class = 'linkbot-button';
+=======
+                    btn_class = 'tweetbotium-squared-button';
+                break;
+                default:
+                    btn_class = 'tweetbotium-button';
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
                     _html = '<span>Tweet</span>';
             }
             renderCustomButton(el, {
@@ -392,12 +466,20 @@ function doTheMagic(){
             href: post_tweet_url + getShareTxt({url: p_url, text: p_title }, 0),
             title: $(el).attr('title'),
             html: '',
+<<<<<<< HEAD
             class: 'linkbot-button'}
+=======
+            class: 'tweetbotium-button'}
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
         );
     });
     //motherboard
     $('a.social-twitter').unbind('click')
+<<<<<<< HEAD
     .mouseenter(function(e){
+=======
+    .click(function(e){
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
         u = post_tweet_url + getShareTxt({
             url: p_url,
             text: p_title,
@@ -463,7 +545,11 @@ $(document).on('focus','.share-panel-url', function(){
 //addthis
 $(document).on('mouseenter', 'a.at-svc-twitter, a.addthis_button_twitter',function(){
 
+<<<<<<< HEAD
     if ( !$(this).hasClass('linkbot') ){
+=======
+    if ( !$(this).hasClass('tweetbotium') ){
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
         u = post_tweet_url + getShareTxt({
             url: p_url,
             text: p_title,
@@ -478,7 +564,11 @@ $(document).on('mouseenter', 'a.at-svc-twitter, a.addthis_button_twitter',functi
 //addtoany
 $(document).on('mouseenter', '[class*="a2a_i"][href*="twitter"], .a2a_button_twitter',function(){
 
+<<<<<<< HEAD
     if ( !$(this).hasClass('linkbot') ){
+=======
+    if ( !$(this).hasClass('tweetbotium') ){
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
         u = post_tweet_url + getShareTxt({
             url: p_url,
             text: p_title,
@@ -492,7 +582,11 @@ $(document).on('mouseenter', '[class*="a2a_i"][href*="twitter"], .a2a_button_twi
 //share42
 $(document).on('mouseenter', '[onclick*="twitter"]',function(){
 
+<<<<<<< HEAD
     if ( !$(this).hasClass('linkbot') ){
+=======
+    if ( !$(this).hasClass('tweetbotium') ){
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
         u = post_tweet_url + getShareTxt({
             url: p_url,
             text: p_title,

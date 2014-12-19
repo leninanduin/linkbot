@@ -1,7 +1,11 @@
 {
     "manifest_version": 2,
 
+<<<<<<< HEAD
     "name": "Linkbot",
+=======
+    "name": "Tweetbotium",
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
     "description": "Replace twitter links for tweetbot calls.",
     "version": "1.0",
 
@@ -10,11 +14,19 @@
             "matches": ["http://*/*", "https://*/*"],
             "js": ["jquery-1.11.1.min.js","urlreplace.js"],
             "all_frames":true,
+<<<<<<< HEAD
             "css": ["linkbot.css"]
         }
     ],
     "web_accessible_resources":[
         "linkbot.css"
+=======
+            "css": ["tweetbotium.css"]
+        }
+    ],
+    "web_accessible_resources":[
+        "tweetbotium.css"
+>>>>>>> 9b6234342bfaadeeaead35a6461f0c4e891da7e3
     ],
     "permissions": [
         "tabs",
