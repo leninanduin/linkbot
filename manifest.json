@@ -3,7 +3,7 @@
 
     "name": "Linkbot",
     "description": "Replace twitter links for tweetbot calls.",
-    "version": "1.0",
+    "version": "1.0.1",
 
     "content_scripts": [
         {
