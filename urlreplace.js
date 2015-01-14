@@ -64,7 +64,7 @@ function getShareTxt(_url_vars, is_official_widget){
     }
 
     if (_url_vars.url) {
-        if ( url_vars.url.match(/\%/g) ){
+        if ( _url_vars.url.match(/\%/g) ){
         // if (!is_official_widget){
             share_txt += '+'+unescape(_url_vars.url);
         }else{
@@ -532,7 +532,7 @@ $(function(){
     });
 });
 
-debug = 0;
+debug = 1;
 function _log(s){
     if (debug){
         console.log(s);
